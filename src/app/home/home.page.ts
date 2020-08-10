@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { combineLatest } from 'rxjs';
 import { IonContent } from '@ionic/angular';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -23,9 +23,13 @@ export class HomePage implements OnInit {
   @ViewChild("gg",{read:ElementRef,static:true}) gg:ElementRef;
   private observer:IntersectionObserver;
   
-  constructor(private renderer:Renderer2) {}
+  constructor(private renderer:Renderer2,
+    private http: HttpClient
+    ) {}
   ngOnInit() {
-    console.log(this.triggerElement);
+    this.http.get('http://localhost:5000/AddressType/addresstypes').subscribe((response) => {
+      console.log(response);
+  });
     this.observer = new IntersectionObserver((entries) => {
 
       entries.forEach((entry: any) => {
